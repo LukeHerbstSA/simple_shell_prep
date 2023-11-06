@@ -7,4 +7,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+struct arguments
+{
+	char *command_line;
+	struct arguments *next;
+} args;
+
 #endif
