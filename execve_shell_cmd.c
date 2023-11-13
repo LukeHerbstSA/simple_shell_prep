@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main(void)
-{
+
 	const char cmd_path[] = "C:/Program Files/Git/usr/bin/ls";
 	const char *args_array[] = {"ls", "-l", NULL};
 	const char *env_vars[] = {NULL};

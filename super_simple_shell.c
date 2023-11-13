@@ -1,38 +1,42 @@
 #include "main.h"
 
-int main()
+/**
+	* main - int function
+	* Description: simple shell
+	* Return: int
+	*/
+int main(void)
 {
-	char *base;
-	env_array = {NULL}
-	char **args_array;
+	char *env_array[] = {NULL};
+	char **arg_array;
 	char *buffer;
-	size_t buffsize = 1024;
-	size_t gen_check;
-	size_t child_pid;
+	size_t buffsize = 100;
+	size_t pid;
+	size_t len_check;
+	int i;
 
-	args_array = malloc(10 * 8);
-	buffer = malloc(buffsize);
-	while (true)
+	arg_array = malloc(2 * sizeof(char *));
+	while (1)
 	{
 		write(1, "$ ", 2);
-		gen_check = getline(buffer, buffsize, stdin);
-		if (getline >= 0)
+		if ((len_check = getline(&buffer, &buffsize, stdin)) == -1)
 		{
-			child_pid = fork();
-			if (child_pid == 0)
-			{
-				base = strrchr(buffer, '/');
-				if (base != NULL)
-				{
-					*args_array = malloc(sizeof(*base));
-					*args_array++;
-					*args_array = NULL;
-					execve(buffer, args_array, env_array);
-				}
-				write(1, "Something went wrong", 20);
-			}
-			else
-				wait();
+			printf("Getline failed - bad buffer or input");
+			return (-1);
 		}
+		printf("\nAfter getlined has written the input to buffer\n");
+		while (buffer[i] != '0')
+			i++;
+		arg_array[0] = malloc(i + 1);
+		arg_array[0] = buffer;
+		arg_array[1] = NULL;
+		printf("After arg_array 0 and 1 has been set\n");
+		if ((pid = fork()) == 0)
+		{
+			execve(buffer, arg_array, env_array);
+			printf("Execve was unsuccessful");
+		}
+		else
+			wait(NULL);
 	}
 }
